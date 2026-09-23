@@ -1,0 +1,20 @@
+# Python
+server/.venv/
+**/__pycache__/
+*.pyc
+
+# Environment variables
+server/.env
+
+# C# / Visual Studio
+**/bin/
+**/obj/
+.vs/
+
+# User-specific Visual Studio files
+*.user
+*.suo
+
+# OS
+Thumbs.db
+.DS_Store

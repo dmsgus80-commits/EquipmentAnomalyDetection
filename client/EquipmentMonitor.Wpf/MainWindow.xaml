@@ -1,0 +1,118 @@
+﻿<Window x:Class="EquipmentMonitor.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        Title="Equipment Monitor"
+        Height="700"
+        Width="900">
+
+	<ScrollViewer VerticalScrollBarVisibility="Auto">
+		<StackPanel Margin="30">
+
+			<TextBlock Text="Equipment Monitoring"
+					   FontSize="28"
+					   FontWeight="Bold"
+					   Margin="0,0,0,20"/>
+
+			<TextBlock x:Name="AirTemperatureText"
+					   FontSize="20"
+					   Margin="0,5"/>
+
+			<TextBlock x:Name="ProcessTemperatureText"
+					   FontSize="20"
+					   Margin="0,5"/>
+
+			<TextBlock x:Name="RpmText"
+					   FontSize="20"
+					   Margin="0,5"/>
+
+			<TextBlock x:Name="TorqueText"
+					   FontSize="20"
+					   Margin="0,5"/>
+
+			<TextBlock x:Name="ToolWearText"
+					   FontSize="20"
+					   Margin="0,5"/>
+		
+			<TextBlock x:Name="FailureProbabilityText"
+					   FontSize="20"
+					   Margin="0,5"/>
+
+			<TextBlock x:Name="FailureTypeProbabilityText"
+					   FontSize="20"
+					   Margin="0,5"/>
+
+			<TextBlock x:Name="StatusText"
+					   FontSize="24"
+					   FontWeight="Bold"
+					   Margin="0,20,0,0"/>
+
+			<TextBlock Text="Recent Anomaly History"
+					   FontSize="22"
+					   FontWeight="Bold"
+					   Margin="0,30,0,10"/>
+
+			<DataGrid x:Name="HistoryGrid"
+					 Height="180"
+					  AutoGenerateColumns="False"
+					  IsReadOnly="True"
+					  Margin="0,10,0,0">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Time"
+									   Binding="{Binding CreatedAt, StringFormat=yyyy-MM-dd HH:mm:ss}"
+									   Width="*"/>
+
+					<DataGridTextColumn Header="Failure Type"
+									   Binding="{Binding FailureType}"
+									   Width="*"/>
+
+					<DataGridTextColumn Header="Failure Probability"
+									   Binding="{Binding FailureProbability, StringFormat=P1}"
+									   Width="*"/>
+				</DataGrid.Columns>
+			
+			</DataGrid>
+
+			<TextBlock Text="Air Temperature Trend"
+					   FontSize="22"
+					   FontWeight="Bold"
+					   Margin="0,30,0,10"/>
+
+			<lvc:CartesianChart x:Name="TemperatureChart"
+								Height="250"/>
+
+			<TextBlock x:Name="AverageTemperatureText"
+					   FontSize="18"
+					   Margin="0,10,0,0"/>
+
+			<TextBlock x:Name="AverageTorqueText"
+					   FontSize="18"
+					   Margin="0,5,0,0"/>
+
+			<TextBlock x:Name="AnomalyCountText"
+					   FontSize="18"
+					   Margin="0,5,0,0"/>
+
+			<TextBlock x:Name="LatestFailureTypeText"
+					   FontSize="18"
+					   Margin="0,5,0,0"/>
+
+			<TextBlock x:Name="AnomalyRateText"
+					   FontSize="18"
+					   Margin="0,5,0,0"/>
+
+			<TextBlock x:Name="FailureTypeCountText"
+					   FontSize="18"
+					   Margin="0,5,0,0"/>
+
+			<TextBlock Text="Failure Type Distribution"
+					   FontSize="22"
+					   FontWeight="Bold"
+					   Margin="0,30,0,10"/>
+
+			<lvc:CartesianChart x:Name="FailureTypeChart"
+								Height="250"/>
+
+		</StackPanel>
+	</ScrollViewer>
+</Window>
