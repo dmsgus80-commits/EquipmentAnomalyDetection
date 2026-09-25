@@ -36,6 +36,8 @@
 - WPF
 - LiveCharts2
 
+WPF 클라이언트는 Windows 10 버전 2004(빌드 19041) 이상을 대상으로 합니다.
+
 ## 프로젝트 구조
 
 ```text
@@ -323,6 +325,8 @@ DB_NAME=equipment_anomaly
 
 MySQL에서 `DB_NAME`에 지정한 데이터베이스와 프로젝트에서 사용하는 테이블을 준비합니다. 접속 계정에는 해당 데이터베이스에 대한 읽기 및 쓰기 권한이 필요합니다.
 
+새 데이터베이스는 `database/schema.sql`로 생성합니다. 이전 버전의 스키마로 이미 생성한 데이터베이스에 알림 상태 열이 없다면 `database/migrate_alarm_status.sql`을 한 번 실행합니다. 상태 열이 이미 있는 데이터베이스에는 마이그레이션을 다시 실행하지 않습니다.
+
 ### 6. FastAPI 서버 실행
 
 프로젝트 루트 기준:
@@ -353,7 +357,7 @@ cd server\simulator
 다음 솔루션 파일을 Visual Studio에서 열어 실행합니다.
 
 ```text
-client/EquipmentMonitor.Wpf/EquipmentMonitor.Wpf.sln
+client/EquipmentMonitor.Wpf/EquipmentMonitor.Wpf.slnx
 ```
 
 FastAPI 서버가 먼저 실행되어 있어야 최신 센서값과 이상 이력을 정상적으로 조회할 수 있습니다.

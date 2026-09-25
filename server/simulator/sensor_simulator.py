@@ -15,7 +15,7 @@ def generate_sensor_data():
 
     if mode == "normal":
         sensor_data = {
-            "air_temperature": round(random.uniform(297.0, 300.0),1),
+            "air_temperature": round(random.uniform(297.0, 300.0), 1),
             "process_temperature": round(random.uniform(307.0, 310.0), 1),
             "rotational_speed": random.randint(1400, 1600),
             "torque": round(random.uniform(35.0, 50.0), 1),
@@ -24,7 +24,7 @@ def generate_sensor_data():
 
     elif mode == "overheat":
         sensor_data = {
-            "air_temperature": round(random.uniform(301.0, 304.0),1),
+            "air_temperature": round(random.uniform(301.0, 304.0), 1),
             "process_temperature": round(random.uniform(312.0, 316.0), 1),
             "rotational_speed": random.randint(1350, 1550),
             "torque": round(random.uniform(40.0, 55.0), 1),
@@ -33,7 +33,7 @@ def generate_sensor_data():
 
     elif mode == "high_torque":
         sensor_data = {
-            "air_temperature": round(random.uniform(298.0, 302.0),1),
+            "air_temperature": round(random.uniform(298.0, 302.0), 1),
             "process_temperature": round(random.uniform(309.0, 313.0), 1),
             "rotational_speed": random.randint(1100, 1400),
             "torque": round(random.uniform(60.0, 75.0), 1),
@@ -42,7 +42,7 @@ def generate_sensor_data():
 
     else:
         sensor_data = {
-            "air_temperature": round(random.uniform(298.0, 302.0),1),
+            "air_temperature": round(random.uniform(298.0, 302.0), 1),
             "process_temperature": round(random.uniform(309.0, 313.0), 1),
             "rotational_speed": random.randint(1300, 1550),
             "torque": round(random.uniform(40.0, 55.0), 1),
@@ -50,7 +50,6 @@ def generate_sensor_data():
         }
 
     return mode, sensor_data
-
 
 
 while True:
@@ -69,6 +68,6 @@ while True:
 
     except requests.exceptions.RequestException as ex:
         print("서버 연결 실패:", ex)
-        
+
     print("-" * 50)
     time.sleep(1)

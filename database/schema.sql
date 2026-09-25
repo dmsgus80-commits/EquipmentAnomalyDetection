@@ -22,6 +22,9 @@ CREATE TABLE IF NOT EXISTS anomaly_event (
     failure_type VARCHAR(50),
     failure_probability FLOAT NOT NULL,
     failure_type_probability FLOAT,
+    status VARCHAR(20) NOT NULL DEFAULT 'UNACKNOWLEDGED',
+    acknowledged_at DATETIME NULL,
+    resolved_at DATETIME NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY (sensor_reading_id)

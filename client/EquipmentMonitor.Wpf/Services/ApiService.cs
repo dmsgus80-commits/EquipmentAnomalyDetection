@@ -40,5 +40,32 @@ namespace EquipmentMonitor.Wpf.Services
 
             return JsonSerializer.Deserialize<List<AnomalyEvent>>(json);
         }
+
+        public async Task<AlarmSummary?> GetAlarmSummaryAsync()
+        {
+            string json = await _httpClient.GetStringAsync(
+                "http://127.0.0.1:8000/history/summary"
+            );
+
+            return JsonSerializer.Deserialize<AlarmSummary>(json);
+        }
+
+        public async Task AcknowledgeAlarmAsync(long alarmId)
+        {
+            string url =
+                $"http://127.0.0.1:8000/alarms/{alarmId}/acknowledge";
+
+            using HttpResponseMessage response = await _httpClient.PatchAsync(url, null);
+            response.EnsureSuccessStatusCode();
+        }
+
+        public async Task ResolveAlarmAsync(long alarmId)
+        {
+            string url =
+                $"http://127.0.0.1:8000/alarms/{alarmId}/resolve";
+
+            using HttpResponseMessage response = await _httpClient.PatchAsync(url, null);
+            response.EnsureSuccessStatusCode();
+        }
     }
 }

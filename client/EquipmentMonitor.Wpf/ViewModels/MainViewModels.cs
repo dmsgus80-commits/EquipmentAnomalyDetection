@@ -42,6 +42,18 @@ namespace EquipmentMonitor.Wpf.ViewModels
 
         public string StatusMessage { get; private set; } = "NORMAL";
 
+        public int UnacknowledgedCount { get; private set; }
+
+        public int AcknowledgedCount { get; private set; }
+
+        public int ResolvedCount { get; private set; }
+
+        public int TotalAlarmCount { get; private set; }
+
+        public List<int> AlarmStatusCounts { get; private set; } = new();
+
+        public List<string> AlarmStatusLabels { get; private set; } = new();
+
         public MainViewModel()
         {
             _apiService = new ApiService();
@@ -73,10 +85,10 @@ namespace EquipmentMonitor.Wpf.ViewModels
             AverageTemperature =
                 recentReadings.Average(r => r.AirTemperature);
 
-            AverageTorque = 
+            AverageTorque =
                 recentReadings.Average(t => t.Torque);
 
-            AnomalyCount = 
+            AnomalyCount =
                 SensorReadings.Count(r => r.MachineFailure == 1);
 
             AnomalyRate =
@@ -100,11 +112,34 @@ namespace EquipmentMonitor.Wpf.ViewModels
 
         public async Task LoadHistoryAsync()
         {
-            History =
-                await _apiService.GetHistoryAsync();
+            List<AnomalyEvent>? history = await _apiService.GetHistoryAsync();
+            AlarmSummary? summary = await _apiService.GetAlarmSummaryAsync();
 
-            if (History == null)
+            if (history == null || summary == null)
                 return;
+
+            History = history;
+            TotalAlarmCount = summary.Total;
+
+            UnacknowledgedCount = summary.Unacknowledged;
+
+            AcknowledgedCount = summary.Acknowledged;
+
+            ResolvedCount = summary.Resolved;
+
+            AlarmStatusCounts = new List<int>
+            {
+                UnacknowledgedCount,
+                AcknowledgedCount,
+                ResolvedCount
+            };
+
+            AlarmStatusLabels = new List<string>
+            {
+                "미확인",
+                "확인됨",
+                "조치 완료"
+            };
 
             if (History.Count > 0)
                 LatestFailureType = History[0].FailureType ?? "Unknown";
@@ -133,6 +168,16 @@ namespace EquipmentMonitor.Wpf.ViewModels
                         g => $"{g.Key ?? "Unknown"}: {g.Count()}"
                     )
                 );
+        }
+
+        public async Task AcknowledgeAlarmAsync(long alarmId)
+        {
+            await _apiService.AcknowledgeAlarmAsync(alarmId);
+        }
+
+        public async Task ResolveAlarmAsync(long alarmId)
+        {
+            await _apiService.ResolveAlarmAsync(alarmId);
         }
     }
 }
